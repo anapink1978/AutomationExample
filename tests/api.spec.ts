@@ -1,11 +1,13 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from '../fixtures/baseApiTest';
 
 test.describe('Automation Exercise API', () => {
-  test('products list endpoint returns products', async ({ request }) => {
+  test('products list endpoint returns products', async ({ api, token }) => {
     let payload: any;
 
     await test.step('Send GET /api/productsList', async () => {
-      const response = await request.get('/api/productsList');
+      const response = await api.get('/api/productsList', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       expect(response.ok()).toBeTruthy();
       payload = await response.json();
     });
@@ -22,11 +24,13 @@ test.describe('Automation Exercise API', () => {
     });
   });
 
-  test('brands list endpoint returns brands', async ({ request }) => {
+  test('brands list endpoint returns brands', async ({ api, token }) => {
     let payload: any;
 
     await test.step('Send GET /api/brandsList', async () => {
-      const response = await request.get('/api/brandsList');
+      const response = await api.get('/api/brandsList', {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       expect(response.ok()).toBeTruthy();
       payload = await response.json();
     });
